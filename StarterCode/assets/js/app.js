@@ -80,14 +80,14 @@ function updateToolTip(chosenXAxis, circlesGroup) {
     circlesGroup.on("mouseover", function(data) {
       toolTip.show(data);
     })
-      // using function for onmouseout event
+      //following the boiler code and  using function to address onmouseout event
       .on("mouseout", function(data, index) {
         toolTip.hide(data);
       });
     return circlesGroup;
   }
 
-// Retrieving the data from csv.
+// utlizie d3.csv library to retrieve the data from csv.
 
 d3.csv("raw_data.csv", function(err, raw_data) {
   if (err) throw err;
@@ -109,7 +109,7 @@ d3.csv("raw_data.csv", function(err, raw_data) {
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
 
-   // append x axis using xAxis variable
+   // following the bolier code i will be appending x axis using xAxis variable
    var xAxis = chartGroup.append("g")
    .classed("x-axis", true)
    .attr("transform", `translate(0, ${height})`)
@@ -136,14 +136,14 @@ d3.csv("raw_data.csv", function(err, raw_data) {
  var poverty_label = labelsGroup.append("text")
  .attr("x", 0)
  .attr("y", 30)
- // these are the value to take for event listener
+ // these are the values (poverty ad healthcare) to take for event listener
  .attr("value", "poverty") 
  .classed("active", true)
  .text("Poverty"); 
  var healthcare_label = labelsGroup.append("text")
  .attr("x", 0)
  .attr("y", 45)
- // value to grab for event listener
+ //idetinfying  value to get for event listener
  .attr("value", "healthcare")
  .classed("inactive", true)
  .text("Healtchare:");
@@ -162,21 +162,22 @@ var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 // x axis labels event listener
 labelsGroup.selectAll("text")
 .on("click", function() {
-  // get value of selection
+  // get selected value
   var value = d3.select(this).attr("value");
   if (value !== chosenXAxis) {
-    // replaces chosenXAxis with value
+    // we are replacing chosenXAxis with value
     chosenXAxis = value;
-    // functions here found above csv import
-    // updates x scale for new data
+
+
+    // updating x scales with new data
     xLinearScale = xScale(raw_data, chosenXAxis);
-    // updates x axis with transition
+    // updating x axis
     xAxis = renderAxes(xLinearScale, xAxis);
-    // updates circles with new x values
+    // I am going to update circles with new value asigned to x
     circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
-    // updates tooltips with new info
+    // I am upating tooltips with new values
     circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
-    // changes classes to change bold text using switch
+    // In order to change bold text i will use boiler code from activity for switch function and use classes
     switch(chosenXAxis) {
       case 'poverty':
         poverty_label
